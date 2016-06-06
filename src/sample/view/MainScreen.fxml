@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.Controller">
+   <children>
+      <SplitPane dividerPositions="0.07023411371237458, 0.5953177257525084" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+            <AnchorPane>
+               <children>
+                  <TextField id="textFieldPort" layoutX="240.0" layoutY="5.0" prefHeight="25.0" prefWidth="58.0" />
+                  <Label layoutX="305.0" layoutY="5.0" prefHeight="25.0" text="Timeout (ms):" />
+                  <TextField id="textFieldTimeout" layoutX="383.0" layoutY="5.0" prefHeight="25.0" prefWidth="47.0" />
+                  <Label layoutX="6.0" layoutY="5.0" prefHeight="25.0" text="Server:" />
+                  <TextField id="textFieldServerIP" layoutX="50.0" layoutY="5.0" prefHeight="25.0" />
+                  <Label layoutX="206.0" layoutY="5.0" prefHeight="25.0" text="Port:" />
+                  <Button layoutX="436.0" layoutY="5.0" mnemonicParsing="false" prefHeight="25.0" text="Connect" />
+                  <Button layoutX="504.0" layoutY="5.0" mnemonicParsing="false" prefHeight="25.0" text="Disconnect" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <ToolBar>
+                    <items>
+                      <Button id="buttonUpdateClusterList" fx:id="buttonUpdateClusterList" mnemonicParsing="false" onAction="#buttonUpdateClusterListOnAction" text="Update cluster list" />
+                        <Button id="buttonTerminateClusterSessions" mnemonicParsing="false" text="Terminate cluster sessions" />
+                    </items>
+                  </ToolBar>
+                  <TableView id="tableViewClusters" fx:id="clusterTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="N" />
+                      <TableColumn fx:id="clusterNameColumn" prefWidth="300.0" text="Name" />
+                        <TableColumn fx:id="clusterHostColumn" prefWidth="75.0" text="Host" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <ToolBar>
+                    <items>
+                      <Button id="buttomUpdateInfobaseList" mnemonicParsing="false" text="Update infobase list" />
+                        <Button id="buttonInfobaseProperties" mnemonicParsing="false" text="Infobase properties" />
+                    </items>
+                  </ToolBar>
+                  <TableView id="tableViewInfobases" fx:id="infobaseTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="N" />
+                      <TableColumn fx:id="infobaseNameColumn" prefWidth="300.0" text="Name" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
