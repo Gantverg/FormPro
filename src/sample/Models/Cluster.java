@@ -1,4 +1,4 @@
-package sample.Models;
+package sample.models;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;

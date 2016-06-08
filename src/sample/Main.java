@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -10,14 +11,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sample.Models.Cluster;
-import sample.Models.Infobase;
+import sample.models.Cluster;
+import sample.models.Connection;
+import sample.models.Infobase;
 import sample.view.Controller;
 
 import java.io.IOException;
 
 public class Main extends Application {
-    public ObservableList<Cluster> clusters =  FXCollections.observableArrayList();
+    private ObservableList<Cluster> clusters =  FXCollections.observableArrayList();
+    private Connection connection;
     private Stage primaryStage;
     private AnchorPane rootLayout;
 
@@ -30,13 +33,14 @@ public class Main extends Application {
             loader.setLocation(Main.class.getResource("view/MainScreen.fxml"));
             rootLayout = (AnchorPane) loader.load();
 
+            // Отображаем сцену, содержащую корневой макет.
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+
             // Даём контроллеру доступ к главному приложению.
             Controller controller = loader.getController();
             controller.setMain(this);
 
-            // Отображаем сцену, содержащую корневой макет.
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,6 +48,8 @@ public class Main extends Application {
     }
 
     private void example(){
+        connection = new Connection();
+
         Cluster cluster1 = new Cluster("name1","host1");
         cluster1.addInfobase(new Infobase("infobase 1.1"));
         cluster1.addInfobase(new Infobase("infobase 1.2"));
@@ -63,5 +69,7 @@ public class Main extends Application {
     public ObservableList<Cluster> getClusters(){
         return this.clusters;
     }
+
+    public Connection getConnection() { return this.connection; }
 
 }

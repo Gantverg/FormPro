@@ -1,24 +1,36 @@
 package sample.view;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import sample.Main;
-import sample.Models.Cluster;
-import sample.Models.Infobase;
+import sample.models.Cluster;
+import sample.models.Connection;
+import sample.models.Infobase;
+
+import sample.AgentAdminUtil;
 
 import java.util.List;
 
 public class Controller {
+
+    private final AgentAdminUtil adminUtil;
 
     @FXML
     TableView<Cluster> clusterTableView;
 
     @FXML
     TableView<Infobase> infobaseTableView;
+
+    @FXML
+    Button buttonConnect;
 
     @FXML
     Button buttonUpdateClusterList;
@@ -32,13 +44,25 @@ public class Controller {
     @FXML
     TableColumn<Infobase, String> infobaseNameColumn;
 
+    @FXML
+    TextField textFieldServer;
+
+    @FXML
+    TextField textFieldPort;
+
+    @FXML
+    TextField textFieldTimeout;
+
     // Ссылка на главное приложение.
     private Main main;
-//
-//
+
+    public Controller(AgentAdminUtil adminUtil)
+    {
+        this.adminUtil = adminUtil;
+    }
+
     @FXML
     private void initialize() {
-        //System.out.println("Start initialize...");
         clusterTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showInfobaseList(newValue));
 
         clusterNameColumn.setCellValueFactory(
@@ -61,9 +85,9 @@ public class Controller {
 
     public void setMain(Main main) {
         this.main = main;
-
-//        // Добавление в таблицу данных из наблюдаемого списка
-//        clusterTableView.setItems(main.getClusters());
+        textFieldServer.setText(main.getConnection().getServer());
+        textFieldPort.setText(Integer.toString(main.getConnection().getPort()));
+        textFieldTimeout.setText(Integer.toString(main.getConnection().getTimeout()));
     }
 
 
@@ -72,4 +96,26 @@ public class Controller {
         //System.out.println("buttonUpdateClusterListOnAction is running...");
         connectToCluster();
     }
+
+    @FXML
+    private void buttonConnectOnAction(){
+        System.out.println("Connetct to "+main.getConnection().getServer()+":"+main.getConnection().getPort());
+        connectToCluster();
+    }
+
+    @FXML
+    private void textFieldServerOnAction(){
+        main.getConnection().setServer(textFieldPort.getText());
+    }
+
+    @FXML
+    private void textFieldPortOnAction() {
+        main.getConnection().setPort(Integer.parseInt(textFieldPort.getText()));
+    }
+
+    @FXML
+    private void textFieldTimeoutOnAction() {
+        main.getConnection().setTimeout(Integer.parseInt(textFieldTimeout.getText()));
+    }
+
 }
