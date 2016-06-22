@@ -1,14 +1,19 @@
 package sample.models;
 
+import com._1c.v8.ibis.admin.IClusterInfo;
+import com._1c.v8.ibis.admin.IInfoBaseInfoShort;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.AgentAdminUtil;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by gantv on 05.06.2016.
@@ -16,14 +21,26 @@ import java.util.List;
 public class Cluster {
     private StringProperty name;
     private StringProperty host;
+    private IClusterInfo iClusterInfo;
     private ListProperty<Infobase> infobases;
 
-    public Cluster(String name, String host) {
-        this.name = new SimpleStringProperty(name);
-        this.host = new SimpleStringProperty(host);
-        List<Infobase> list = new LinkedList<>();
-        ObservableList<Infobase> observableList = FXCollections.observableArrayList(list);
+    public Cluster(IClusterInfo iClusterInfo, AgentAdminUtil agentAdminUtil) {
+        this.iClusterInfo = iClusterInfo;
+        this.name = new SimpleStringProperty(iClusterInfo.getName());
+        this.host = new SimpleStringProperty(iClusterInfo.getHostName());
+        ObservableList<Infobase> observableList = FXCollections.observableArrayList(new LinkedList<>());
         this.infobases = new SimpleListProperty<Infobase>(observableList);
+    }
+
+    public void updateInfobaseList(AgentAdminUtil agentAdminUtil, String login, String password){
+        final UUID clusterId = iClusterInfo.getClusterId();
+        if (clusterId != null)
+        {
+            for (IInfoBaseInfoShort iInfoBaseInfoShort:agentAdminUtil.getInfoBaseShortInfos(clusterId)) {
+                this.infobases.add(new Infobase(iInfoBaseInfoShort));
+            }
+        }
+
     }
 
     public void setName(String name) {
@@ -45,6 +62,10 @@ public class Cluster {
     public String getHost() {
         return host.get();
     }
+
+    public IClusterInfo getiClusterInfo() { return iClusterInfo; }
+
+    public void setiClusterInfo(IClusterInfo iClusterInfo) { this.iClusterInfo = iClusterInfo; }
 
     public ListProperty<Infobase> getInfobases() {
         return infobases;

@@ -42,7 +42,7 @@
                <children>
                   <ToolBar>
                     <items>
-                      <Button id="buttomUpdateInfobaseList" mnemonicParsing="false" text="Update infobase list" />
+                      <Button id="buttomUpdateInfobaseList" mnemonicParsing="false" onAction="#buttonUpdateInfobaseListOnAction" text="Update infobase list" />
                         <Button id="buttonInfobaseProperties" mnemonicParsing="false" text="Infobase properties" />
                     </items>
                   </ToolBar>
